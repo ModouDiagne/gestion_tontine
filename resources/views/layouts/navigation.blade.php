@@ -23,7 +23,21 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <!-- Ajout de l'avatar -->
+                            <div class="flex items-center gap-2">
+                                @if(Auth::user()->avatar)
+                                    <img
+                                        src="{{ Storage::url(Auth::user()->avatar) }}"
+                                        alt="Photo de profil"
+                                        class="h-8 w-8 rounded-full object-cover border-2 border-blue-500"
+                                    >
+                                @else
+                                    <div class="bg-gray-200 dark:bg-gray-700 h-8 w-8 rounded-full flex items-center justify-center text-sm">
+                                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                    </div>
+                                @endif
+                                <span>{{ Auth::user()->name }}</span>
+                            </div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -33,6 +47,7 @@
                         </button>
                     </x-slot>
 
+                    <!-- Le reste du code dropdown reste inchangé -->
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
@@ -41,7 +56,6 @@
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
@@ -75,8 +89,24 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <!-- Ajout de l'avatar en version mobile -->
+                <div class="flex items-center gap-3 mb-2">
+                    @if(Auth::user()->avatar)
+                        <img
+                            src="{{ Storage::url(Auth::user()->avatar) }}"
+                            alt="Photo de profil"
+                            class="h-10 w-10 rounded-full object-cover border-2 border-blue-500"
+                        >
+                    @else
+                        <div class="bg-gray-200 dark:bg-gray-700 h-10 w-10 rounded-full flex items-center justify-center">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+                    @endif
+                    <div>
+                        <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
+                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    </div>
+                </div>
             </div>
 
             <div class="mt-3 space-y-1">
@@ -87,7 +117,6 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
