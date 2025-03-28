@@ -7,7 +7,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -27,34 +26,15 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        // Validation unifiée
-        $validated = $request->validated();
-        $additionalData = $request->validate([
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:255',
-            'avatar' => 'nullable|image|max:2048'
-        ]);
+        $request->user()->fill($request->validated());
 
-        // Gestion avancée de l'avatar
-        if ($request->hasFile('avatar')) {
-            $this->updateAvatar($request->user(), $request->file('avatar'));
-            $additionalData['avatar'] = $request->user()->avatar;
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
         }
 
-        // Mise à jour atomique
-        $request->user()->update(array_merge($validated, $additionalData));
+        $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
-
-    /**
-     * Gestion sécurisée de l'avatar
-     */
-    protected function updateAvatar($user, $file): void
-    {
-        Storage::disk('public')->delete($user->avatar);
-        $user->avatar = $file->store('avatars', 'public');
-        $user->save();
     }
 
     /**
@@ -67,7 +47,9 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
         Auth::logout();
+
         $user->delete();
 
         $request->session()->invalidate();

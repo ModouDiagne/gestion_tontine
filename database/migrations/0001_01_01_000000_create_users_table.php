@@ -12,18 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            // Identifiants de base
             $table->id();
+
+            // Authentification
+            $table->string('name') ;
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('profil',
-            [
-                'SUPER_ADMIN',
-                'ADMIN',
-                'PARTICIPANT'
-            ])->default('PARTICIPANT');
-            $table->rememberToken();
+            $table->rememberToken(); // <-- Uniquement UNE fois
+
+            // Rôle et sécurité
+            $table->enum('profil', ['SUPER_ADMIN', 'ADMIN', 'PARTICIPANT'])->default('PARTICIPANT');
+
+            // Timestamps (UNIQUEMENT UNE FOIS)
             $table->timestamps();
+
+            // Index
+            $table->index('profil');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -104,7 +104,11 @@ return [
             explode(',', env('APP_PREVIOUS_KEYS', ''))
         ),
     ],
-
+'aliases' => [
+    'DB' => Illuminate\Support\Facades\DB::class,
+    'Auth' => Illuminate\Support\Facades\Auth::class,
+    // ...
+],
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver

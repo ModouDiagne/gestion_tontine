@@ -1,0 +1,50 @@
+/* 🌆 Arrière-plan */
+body {
+    background:  url('/storage/tontine_app.jpeg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+/* 🎨 Effet de transparence */
+.overlay {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 50px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+}
+
+/* 🚀 Boutons stylés */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background: #ff5733;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #e04e2e;
+}
+
+.btn-secondary {
+    background: #3498db;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #2980b9;
+}

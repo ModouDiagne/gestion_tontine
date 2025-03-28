@@ -1,3 +1,99 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Styles personnalisés */
+.nav-item .btn-link {
+    text-align: left;
+    width: 100%;
+    color: #858796;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-item .btn-link:hover {
+    color: #4e73df;
+    background-color: rgba(78, 115, 223, 0.1);
+    text-decoration: none;
+    transform: translateX(5px);
+}
+
+/* Animation de la sidebar */
+.sidebar {
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+/* Style des icônes */
+.sidebar-brand-icon {
+    transition: transform 0.3s ease;
+}
+
+.sidebar-brand:hover .sidebar-brand-icon {
+    transform: rotate(-15deg);
+}
+
+/* Badges */
+.badge-tontine {
+    @apply inline-block px-2 py-1 text-xs font-bold rounded-full;
+}
+
+.badge-active {
+    @apply bg-green-100 text-green-800;
+}
+
+.badge-inactive {
+    @apply bg-red-100 text-red-800;
+}
+
+/* Surbrillance des éléments actifs */
+.active-menu-item {
+    @apply bg-white bg-opacity-10 rounded-lg;
+    position: relative;
+}
+
+.active-menu-item::after {
+    content: "";
+    @apply absolute right-0 top-1/2 w-1 h-6 bg-yellow-400 rounded-l-full;
+    transform: translateY(-50%);
+}
+html {
+    scroll-behavior: smooth;
+}
+.danger-zone {
+    border-left: 3px solid #dc2626;
+    padding-left: 1rem;
+    transition: all 0.3s ease;
+}
+
+.dark .danger-zone {
+    border-color: #f87171;
+}
+.table td, .table th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.badge {
+    font-size: 0.8em;
+    padding: 0.4em 0.6em;
+}
+
+.fa-circle {
+    font-size: 0.6em;
+    vertical-align: middle;
+}
+
+.btn-sm.py-0 {
+    padding: 0.15rem 0.5rem;
+    font-size: 0.8em;
+}
+.table thead th {
+    white-space: nowrap;
+}
+.fa-check-circle, .fa-times-circle {
+    font-size: 0.9em;
+}

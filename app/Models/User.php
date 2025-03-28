@@ -50,4 +50,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function tontines()
+{
+    return $this->belongsToMany(Tontine::class, 'participants')
+                ->withPivot('montant_personne', 'cycle_vie', 'est_actif');
+}
+
+public function tontinesParticipantes()
+{
+    return $this->belongsToMany(Tontine::class, 'participants')
+        ->withPivot(['montant_personne', 'cycle_vie', 'est_actif'])
+        ->withTimestamps();
+}
 }
